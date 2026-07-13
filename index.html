@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Quest System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- LEVEL UP OVERLAY -->
+    <div id="levelup-overlay" style="display: none;">
+        <div class="overlay-content">
+            <h1>[ LEVEL UP ]</h1>
+            <p>The System status has evolved.</p>
+            <div id="stat-gains">STR +1 | INT +2 | VIT +1</div>
+        </div>
+    </div>
+
+    <!-- PENALTY OVERLAY -->
+    <div id="penalty-overlay" style="display: none;">
+        <div class="penalty-content">
+            <h1 class="penalty-title">[ PENALTY PROTOCOL ]</h1>
+            <p>You failed the daily objective. Complete this task to unlock the System:</p>
+            <div id="random-penalty-task" class="penalty-task">Loading task...</div>
+            <button onclick="completePenaltyQuest()">Verify Penalty Completion</button>
+        </div>
+    </div>
+
+    <!-- 1. STATUS WINDOW -->
+    <header class="status-window">
+        <h2>[ STATUS WINDOW ]</h2>
+        <p><strong>Player:</strong> Niloy</p>
+        <p><strong>Title:</strong> E-Rank Student</p>
+        <p><strong>Level:</strong> <span id="player-level">1</span></p>
+        
+        <div class="exp-container">
+            <span>EXP: </span>
+            <span id="exp-text">0 / 200</span>
+            <div class="exp-bar-bg">
+                <div id="exp-bar-fill" style="width: 0%;"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. QUEST HUB -->
+    <section class="quest-hub">
+        <h3>[ DAILY QUEST LOG ]</h3>
+        
+        <div class="quest-card daily-quest">
+            <h4>Quest: Academic Ascension</h4>
+            <p>Task: Code for 30 minutes today.</p>
+            <button onclick="completeDailyQuest()">Complete Quest (+50 EXP)</button>
+            <button class="fail-btn" onclick="triggerPenalty()">Fail Quest (Trigger Penalty)</button>
+        </div>
+    </section>
+
+    <!-- 3. STATS PANEL -->
+    <footer class="stats-panel">
+        <h3>[ PLAYER ATTRIBUTES ]</h3>
+        <p>STR: <span id="stat-str">10</span></p>
+        <p>INT: <span id="stat-int">10</span></p>
+        <p>VIT: <span id="stat-vit">10</span></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
