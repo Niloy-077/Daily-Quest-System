@@ -43,18 +43,19 @@
         </div>
     </header>
 
-    <!-- 2. QUEST HUB -->
+   <!-- 2. QUEST HUB -->
     <section class="quest-hub">
         <h3>[ DAILY QUEST LOG ]</h3>
         
-        <div class="quest-card daily-quest">
-            <h4>Quest: Academic Ascension</h4>
-            <p>Task: Code for 30 minutes today.</p>
-            <button onclick="completeDailyQuest()">Complete Quest (+50 EXP)</button>
-            <button class="fail-btn" onclick="triggerPenalty()">Fail Quest (Trigger Penalty)</button>
+        <!-- Custom Quest Input -->
+        <div class="quest-input-area" style="margin-bottom: 20px;">
+            <input type="text" id="new-quest-input" placeholder="Enter a new daily quest..." style="width: 70%; padding: 10px; background: #1e1e24; color: #fff; border: 1px solid #a855f7; border-radius: 4px;">
+            <button onclick="addNewQuest()" style="width: 25%; display: inline-block;">Add Quest</button>
         </div>
-    </section>
 
+        <!-- Where the dynamic quests will appear -->
+        <div id="quest-list"></div>
+    </section>
     <!-- 3. STATS PANEL -->
     <footer class="stats-panel">
         <h3>[ PLAYER ATTRIBUTES ]</h3>
