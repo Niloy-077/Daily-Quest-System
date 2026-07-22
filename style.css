@@ -14,3 +14,63 @@ body {
     padding: 30px 15px;
     min-height: 100vh;
 }
+.status-window, 
+.quest-hub, 
+.stats-panel {
+    background-color: #121214;
+    border: 1px solid #334155;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h2, h3 {
+    color: #a855f7;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #27272a;
+    padding-bottom: 8px;
+}
+
+p {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.exp-bar {
+    border: 1px solid #3f3f46;
+}
+/*
+ BUTTONS and INPUTS
+ */
+input[type="text"] {
+    outline: none;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #c084fc !important;
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+}
+
+button {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
