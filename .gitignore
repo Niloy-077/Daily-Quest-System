@@ -1,0 +1,16 @@
+node_modules/
+.env
+
+# SQLite database — created on first boot, never committed
+data/*.sqlite
+data/*.sqlite-journal
+data/*.sqlite-wal
+data/*.sqlite-shm
+
+# Uploaded proof files live outside the webroot and are served only
+# through an authenticated route. Never commit a player's evidence.
+uploads/*
+!uploads/.gitkeep
+
+*.log
+.DS_Store
