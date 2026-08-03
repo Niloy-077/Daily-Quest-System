@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questism</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="topbar">
+        <div class="wordmark">Quest<b>ism</b></div>
+        <div class="right">
+            <span class="mana-chip" title="Mana — earned by clearing quests. A future phase mints a token from this ledger.">◈ <b id="mana">0</b> Mana</span>
+            <button class="btn ghost small" id="logout">Log out</button>
+        </div>
+    </div>
+
+    <main class="asc stage">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="floor" id="floor">Floor E · E-Rank</div>
+            <div class="orb-wrap">
+                <div class="orb" id="orb" style="--exp:0%"></div>
+                <div class="orb-core">
+                    <div>
+                        <div class="orb-lvl num" id="level">1</div>
+                        <div class="sys-label">Level</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-name" id="hero-name">—</div>
+            <div class="hero-exp num" id="hero-exp">0 / 200 EXP</div>
+            <div class="stats">
+                <div class="stat"><div class="v num" id="str">10</div><div class="k">STR</div><div class="d" id="dstr">+1</div></div>
+                <div class="stat"><div class="v num" id="int">10</div><div class="k">INT</div><div class="d" id="dint">+2</div></div>
+                <div class="stat"><div class="v num" id="vit">10</div><div class="k">VIT</div><div class="d" id="dvit">+1</div></div>
+            </div>
+        </section>
+
+        <!-- DEADLINE -->
+        <section class="deadline">
+            <div class="sys-label">Day ends in</div>
+            <div class="dclock num" id="clock">—:—:—</div>
+            <p id="deadline-note">Every gate still open at your midnight is <b>failed by the System</b>, whether this page is open or not.</p>
+        </section>
+
+        <!-- COMPOSER -->
+        <section class="composer">
+            <input type="text" class="field-input" id="quest-input" maxlength="200" placeholder="Name the gate you will clear today…">
+            <div class="sigils" id="sigils">
+                <button class="sigil" data-cat="mind" aria-pressed="false" title="Mind"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><ellipse cx="12" cy="12" rx="10" ry="4.6"/><ellipse cx="12" cy="12" rx="4.6" ry="10"/></svg></button>
+                <button class="sigil" data-cat="body" aria-pressed="false" title="Body"><svg viewBox="0 0 24 24"><path d="M12 2 5 13h5l-1.5 9L19 10h-5.5L15 2z"/></svg></button>
+                <button class="sigil" data-cat="discipline" aria-pressed="false" title="Discipline"><svg viewBox="0 0 24 24"><path d="M12 2 3 6v6c0 5 3.8 9.2 9 10 5.2-.8 9-5 9-10V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg></button>
+                <button class="sigil" data-cat="craft" aria-pressed="false" title="Craft"><svg viewBox="0 0 24 24"><path d="M12 2 22 12 12 22 2 12z"/><path d="M12 7 17 12l-5 5-5-5z"/></svg></button>
+            </div>
+            <p class="sigil-hint" id="sigil-hint">Pick a discipline, or leave it and the System will read your intent.</p>
+            <div id="quest-message" class="message error" hidden></div>
+            <button class="btn wide" id="add-btn">Open the gate</button>
+        </section>
+
+        <!-- ACTIVE GATES -->
+        <section>
+            <h2 class="section-title">Open gates <span class="tally" id="active-count"></span></h2>
+            <div class="spine" id="gates"></div>
+        </section>
+
+        <!-- AWAITING REVIEW -->
+        <section id="review-section" class="hidden" style="margin-top:28px;">
+            <h2 class="section-title">Awaiting the agent</h2>
+            <div class="spine" id="review-gates"></div>
+        </section>
+
+        <!-- ROADMAP -->
+        <section class="roadmap">
+            <p class="sys-label">System roadmap</p>
+            <ul>
+                <li><b>Phase 2</b> — an AI joins the agent's review as a first-pass filter</li>
+                <li><b>Phase 3</b> — Mana becomes a tokenized reward</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- ARISE / LEVEL UP -->
+    <div class="veil" id="levelup">
+        <div class="lu">
+            <div class="lu-arise">Arise</div>
+            <div class="lu-sub" id="lu-sub">You have reached Level 2</div>
+            <div class="lu-stats">
+                <div class="lu-stat"><div class="k">STR</div><div class="v num" id="lu-str">11</div><div class="d">+1</div></div>
+                <div class="lu-stat"><div class="k">INT</div><div class="v num" id="lu-int">12</div><div class="d">+2</div></div>
+                <div class="lu-stat"><div class="k">VIT</div><div class="v num" id="lu-vit">11</div><div class="d">+1</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUEST PROOF MODAL -->
+    <div class="veil" id="quest-proof">
+        <div class="sheet">
+            <div class="sheet-inner">
+                <div class="sheet-title">Clear the gate</div>
+                <div class="sheet-sub">Submit proof · an agent verifies before the reward lands</div>
+                <div class="quest-recall" id="qp-task">—</div>
+
+                <div id="qp-message" class="message error" hidden></div>
+
+                <div class="field">
+                    <label for="qp-notes">What did you do?</label>
+                    <textarea id="qp-notes" placeholder="Describe how you cleared it. Numbers and specifics help the agent."></textarea>
+                </div>
+                <div class="drop" id="qp-drop">
+                    <svg viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+                    <span id="qp-drop-label">Drop a photo or file, or click to choose (optional)</span>
+                </div>
+
+                <div class="sheet-foot">
+                    <p class="sheet-note">Reward: <b id="qp-reward">+50 EXP · +20 Mana</b>, granted when the agent approves.</p>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn ghost small" id="qp-cancel">Cancel</button>
+                        <button class="btn small" id="qp-submit">Submit proof</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PENALTY TAKEOVER -->
+    <div class="veil" id="penalty">
+        <div class="sheet">
+            <div class="sheet-inner">
+                <div class="seal">
+                    <div class="seal-mark"><svg viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10.5" rx="1"/><path d="M8 10.5V7a4 4 0 018 0v3.5"/></svg></div>
+                    <div>
+                        <div class="sheet-title crit">Penalty</div>
+                        <div class="sheet-sub" id="pen-sub">—</div>
+                    </div>
+                </div>
+
+                <div class="task-box" id="pen-task">—</div>
+
+                <!-- awaiting-review state -->
+                <div class="awaiting hidden" id="pen-awaiting">
+                    <div class="big">Under review</div>
+                    <p style="margin-top:6px; font-size:12px; line-height:1.6;">Your proof is with an agent. The System stays locked until it is approved.</p>
+                </div>
+
+                <!-- proof form -->
+                <div id="pen-form">
+                    <div class="sys-label" style="margin-bottom:10px;">Requirements — checked as you write</div>
+                    <div class="checks" id="pen-checks"></div>
+
+                    <div id="pen-message" class="message error" hidden></div>
+
+                    <textarea id="pen-notes" placeholder="Write what you actually did. Numbers and sources count."></textarea>
+                    <div class="drop hidden" id="pen-drop">
+                        <svg viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+                        <span id="pen-drop-label">Drop evidence, or click to choose</span>
+                    </div>
+
+                    <div class="sheet-foot">
+                        <p class="sheet-note">The lock is a row in the server's database, not this screen. Logging out or switching browsers returns you here.</p>
+                        <button class="btn danger small" id="pen-submit">Submit proof</button>
+                    </div>
+                </div>
+
+                <p style="text-align:center; margin-top:16px;">
+                    <button class="btn ghost small" id="pen-logout">Log out</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
