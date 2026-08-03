@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questism — Access the System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-shell">
+        <h1>Quest<b>ism</b></h1>
+        <p class="sys-label" style="text-align:center; margin-bottom:24px;">Authenticate to access the System</p>
+
+        <div class="panel">
+            <div class="auth-tabs">
+                <button type="button" id="tab-login" class="active">Log In</button>
+                <button type="button" id="tab-register">Awaken</button>
+            </div>
+
+            <div id="message" class="message error" hidden></div>
+
+            <form id="auth-form" autocomplete="on">
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required
+                           autocomplete="username" maxlength="20" spellcheck="false">
+                </div>
+
+                <div class="field" id="display-name-field" hidden>
+                    <label for="display-name">Hunter Name</label>
+                    <input type="text" id="display-name" name="displayName"
+                           autocomplete="nickname" maxlength="40" placeholder="Shown in your status window">
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required
+                           autocomplete="current-password" minlength="8">
+                    <p class="sys-label" id="password-hint" style="margin-top:6px;" hidden>At least 8 characters</p>
+                </div>
+
+                <button type="submit" class="btn wide" id="submit-btn">Enter the System</button>
+            </form>
+        </div>
+
+        <p class="sys-label" style="text-align:center; line-height:1.7; margin-top:18px;">
+            Your level, EXP, Mana and lock status live on the server.<br>
+            Clearing site data will not reset them.
+        </p>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
