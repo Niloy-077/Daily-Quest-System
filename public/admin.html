@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questism — Agent Console</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="console stage">
+        <div class="console-head">
+            <h1>[ Agent Console ]</h1>
+            <div class="right" style="display:flex; align-items:center; gap:12px;">
+                <span class="sys-label">Pending <b class="num" id="count" style="color:var(--aether-hi)">0</b></span>
+                <button class="btn ghost small" id="refresh">Refresh</button>
+                <button class="btn ghost small" id="logout">Log out</button>
+            </div>
+        </div>
+        <p class="sys-label">Review submitted proof — approve to reward or unlock, reject to send it back.</p>
+        <div class="queue" id="queue"></div>
+
+        <section class="roadmap console-roadmap">
+            <p class="sys-label">System roadmap</p>
+            <ul>
+                <li><b>Phase 2</b> — the AUTO pre-check above becomes an AI's first pass. You keep the final call.</li>
+                <li><b>Phase 3</b> — approvals here begin minting from the Mana ledger as a real token.</li>
+            </ul>
+        </section>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script src="admin.js"></script>
+</body>
+</html>
