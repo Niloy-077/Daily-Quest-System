@@ -1,0 +1,107 @@
+========================================================================
+  QUESTISM — how to run it locally
+========================================================================
+
+You need Node.js 20 or newer.  Check with:   node -v
+If you don't have it, install from https://nodejs.org (the LTS build).
+
+------------------------------------------------------------------------
+STEP 1 — open a terminal IN this folder
+------------------------------------------------------------------------
+Windows:  open the "Questism" folder, click the address bar, type
+          powershell  and press Enter.
+
+IMPORTANT: make sure you are IN the folder that directly contains
+package.json and server.js. If your zip tool created a nested
+Questism\Questism folder, "cd" one level deeper first — check with:
+
+    dir
+
+You should see package.json, server.js, public, src, tests listed
+directly. If you instead see another "Questism" folder, run:
+
+    cd Questism
+
+------------------------------------------------------------------------
+STEP 2 — install the dependencies (one time)
+------------------------------------------------------------------------
+    npm install
+
+------------------------------------------------------------------------
+STEP 3 — create your settings file
+------------------------------------------------------------------------
+Copy the example file:
+
+    Windows PowerShell:   Copy-Item .env.example .env
+    Mac / Linux:          cp .env.example .env
+
+Then open .env in a text editor and set these three values:
+
+    SESSION_SECRET   any long random string
+    ADMIN_USERNAME   agent
+    ADMIN_PASSWORD   agentpass123     (or anything you like)
+
+To generate a good SESSION_SECRET, run:
+    node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+and paste the result.
+
+Note: on every server start, the account named ADMIN_USERNAME is forced
+to match ADMIN_PASSWORD exactly (even if it already existed). That is
+deliberate — see README.md, "Roles and the review queue" — it is what
+stops anyone from registering that username first and keeping control
+of the agent seat.
+
+------------------------------------------------------------------------
+STEP 4 — start it
+------------------------------------------------------------------------
+    npm start
+
+Then open your browser at:   http://localhost:3000
+Stop the server later with Ctrl + C.
+
+------------------------------------------------------------------------
+STEP 5 — run the tests (optional, good to show)
+------------------------------------------------------------------------
+    npm test
+
+You should see:  # pass 53   # fail 0
+
+========================================================================
+  HOW TO DEMO IT  (the strongest thing to show)
+========================================================================
+1. Open http://localhost:3000 and register a player.
+2. Add a quest, e.g. "Read 20 pages", pick the Mind sigil.
+3. Click the check (Clear the gate) -> write proof -> Submit.
+   The gate moves to "Awaiting the agent".
+4. Open a SECOND browser window (or an Incognito window) and log in
+   with your ADMIN_USERNAME / ADMIN_PASSWORD. You land on the Agent
+   Console -> approve the submission.
+5. Back in the player window, EXP and Mana appear. Reward granted only
+   after the agent approved it.
+
+To show the lock:
+6. Add a quest and click the X (Give up). A PENALTY takes over the
+   screen. Try to escape: open DevTools and run  localStorage.clear()
+   then reload -> still locked. The lock lives on the server, not the
+   page.
+7. Type in the penalty notes box and watch the requirement checklist
+   tick green in real time. Submit -> it goes to the agent -> approve
+   in the other window -> unlocked.
+
+Scroll to the bottom of either screen to see the "System roadmap" note
+— what Phase 2 (AI-assisted review) and Phase 3 (Mana becomes a token)
+will add later.
+
+========================================================================
+  WHAT'S INSIDE
+========================================================================
+  server.js        the Express server (start here)
+  src/             all the backend logic (auth, quests, penalties,
+                   review queue, Mana ledger, the deadline sweeper)
+  public/          the browser app (player UI, login, agent console)
+  tests/           53 automated tests
+  README.md        full write-up of how the system works
+
+The database (data/questism.sqlite) builds itself the first time you
+run "npm start". You never create it by hand.
+========================================================================
